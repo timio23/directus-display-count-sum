@@ -1,7 +1,5 @@
 import DisplayComponent from './display.vue';
 import { useStores } from '@directus/extensions-sdk';
-//import { getRelatedCollection, defineDisplay, renderPlainStringTemplate, adjustFieldsForDisplays, useExtension } from '@directus/shared';
-//import { get, set } from 'lodash';
 
 export default {
 	id: 'directus-display-count-sum',
@@ -10,29 +8,8 @@ export default {
 	description: 'Count the related records or display the sum of the select column',
 	component: DisplayComponent,
 	options: ({ editing, relations }) => {
-		//const relatedCollection = relations.o2m?.collection ?? relations.m2o?.related_collection;
 		const relatedCollection = relations.o2m?.meta.junction_field != null?relations.m2o?.related_collection:relations.o2m?.collection;
 		const junction_table = relations.o2m?.meta.junction_field != null?relations.o2m?.collection:null;
-		//console.log(relations);
-		/*
-			o2m: {
-				collection: "test_views"
-				field: "test_product"
-				meta: {
-					id: 135
-					junction_field: null
-					many_collection: "test_views"
-					many_field: "test_product"
-					one_allowed_collections: null
-					one_collection: "test"
-					one_collection_field: null
-					one_deselect_action: "nullify"
-					one_field: "total"
-					sort_field: null
-				}
-			}
-		*/
-
 		const { useFieldsStore } = useStores();
 		const fieldsStore = useFieldsStore();
 		if(editing === '+'){
@@ -109,6 +86,5 @@ export default {
 	localTypes: ['m2m', 'm2o', 'o2m', 'translations', 'm2a', 'file', 'files'],
 	fields: (options) => {
 		return [options.column];
-
 	},
 };
